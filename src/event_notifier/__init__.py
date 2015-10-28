@@ -7,9 +7,6 @@
 .. autoModule:: event_notifier.NotificationBackend
 """
 
-import abc
-import requests
-
 from .exceptions import EventNotifierException, EventNotifierNotificationDispatchException
 
 from . import Event

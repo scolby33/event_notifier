@@ -1,3 +1,6 @@
+import abc
+import requests
+
 class ANotifierBackend(object, metaclass=abc.ABCMeta):
     """Abstract class for notifier backends"""
     @abc.abstractmethod
