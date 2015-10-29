@@ -11,6 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
    
+   apidoc/modules
+
+
 
 Indices and tables
 ==================
