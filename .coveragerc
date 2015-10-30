@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = event_notifier
+
+[paths]
+source =
+    src/event_notifier
+    .tox/*/lib/python*/site-packages/event_notifier
+    
+[report]
+show_missing = True

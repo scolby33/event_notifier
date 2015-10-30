@@ -1,4 +1,4 @@
-include *.md tox.ini docs/Makefile
+include *.md tox.ini docs/Makefile .coveragerc
 recursive-include tests *.py
 recursive-include docs/source *.rst
 recursive-include docs/source *.py
