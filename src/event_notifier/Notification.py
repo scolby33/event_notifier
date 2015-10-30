@@ -1,10 +1,6 @@
 import attr
 import datetime
 
-def is_datetime(instance, attribue, value):
-    if not isinstance(value, datetime.datetime):
-         raise TypeError('timestamp must be a datetime.datetime object')
-
 @attr.s
 class Notification(object):
     """An object representing a notification ready to be sent. Generally will be passed to a NotifierBackend for dispatching."""
@@ -13,5 +9,5 @@ class Notification(object):
     url = attr.ib(default=str())
     url_title = attr.ib(default=str())
     priority = attr.ib(default=0)
-    timestamp = attr.ib(default=datetime.datetime.now(), validator=is_datetime)
+    timestamp = attr.ib(default=datetime.datetime.now(), validator=attr.validators.instance_of(datetime.datetime))
     sound = attr.ib(default=str())
