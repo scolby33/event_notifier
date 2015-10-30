@@ -15,4 +15,4 @@ Document your code! This project uses `sphinx` and its `autodoc` extension to ge
 - Run `tox`. Fix any failing tests or areas of your contribution that lack test coverage.
 - Push your contribution or create a pull request!
 
-These instructions currently don't work for building the docs. For that, you will need to install `sphinx` as well. This functionality will be implemented with `tox` in the future.
+`tox` is currently set up to build the docs with `sphinx` to test that they can actually be built. To build them for distribution requires installation of `sphinx` (`pip install sphinx`). This situation remains a work in progress--I would like the ability to create the docs for distribution without needing to add any packages besides `tox`.
