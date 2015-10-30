@@ -1,0 +1,6 @@
+include *.md tox.ini docs/Makefile
+recursive-include tests *.py
+recursive-include docs/source *.rst
+recursive-include docs/source *.py
+prune docs/build
+prune docs/source/apidoc
