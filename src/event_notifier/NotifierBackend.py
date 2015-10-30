@@ -8,7 +8,7 @@ class ANotifierBackend(object, metaclass=abc.ABCMeta):
         """Sends a passsed-in notification
         
         :param notification: a Notification object to be dispatched
-        :type notification: Notification
+        :type notification: event_notifier.Notification.Notification
         :returns: 0 on success, an error code otherwise
         """
         raise NotImplementedError
@@ -33,7 +33,7 @@ class PushoverNotifierBackend(ANotifierBackend):
         """Sends a passed-in notification
         
         :param notification: a Notification object to be dispatched
-        :type notification: Notification
+        :type notification: event_notifier.Notification.Notification
         :raises EventNotifierNotificationDispatchException: When an error is encountered with dispatching the notification. Passes the response object from the HTTP POST request to the exception.
         """
         payload = {
