@@ -22,7 +22,7 @@ EXTRAS_REQUIRE = {}
 
 #################################################################
 
-HERE = os.path.abspath(path.dirname(__file__))
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 def read(*parts):
     """Build an absolute path from *parts* and return the contents of the resulting file. Assume UTF-8 encoding."""
@@ -43,12 +43,12 @@ def find_meta(meta):
 
 def get_long_description():
     """Get the long_description from the README.md file. Assume UTF-8 encoding."""
-    with codecs.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    with codecs.open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
         long_description = f.read()
 
 if __name__ == '__main__':
     setuptools.setup(
-        name = NAME,
+        name = find_meta('title'),
         version = find_meta('version'),
         description = find_meta('description'),
         long_description = get_long_description(),
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         classifiers = CLASSIFIERS,
         keywords = KEYWORDS,
         packages = PACKAGES,
-        package_dir = {'': 'src'}
+        package_dir = {'': 'src'},
         install_requires = INSTALL_REQUIRES,
         extras_require = EXTRAS_REQUIRE
     )
