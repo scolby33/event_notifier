@@ -6,5 +6,5 @@ script:
 env:
     - TOXENV=coverage-clean
     - TOXENV=py35
-    - TOXENV=manifext
+    - TOXENV=manifest
     - TOXENV=coverage-report
