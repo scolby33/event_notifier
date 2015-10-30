@@ -4,7 +4,7 @@ import requests
 class ANotifierBackend(object, metaclass=abc.ABCMeta):
     """Abstract class for notifier backends"""
     @abc.abstractmethod
-    def dispatch_notification(self, notification):
+    def dispatch_notification(self, notification): # pragma: no cover
         """Sends a passsed-in notification
         
         :param notification: a Notification object to be dispatched
