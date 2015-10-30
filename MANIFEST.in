@@ -1,6 +1,10 @@
-include *.md tox.ini docs/Makefile .coveragerc
-recursive-include tests *.py
-recursive-include docs/source *.rst
-recursive-include docs/source *.py
+include *.md
+include tox.ini
+include docs/Makefile
+include .coveragerc
+
+recursive-include docs *
 prune docs/build
 prune docs/source/apidoc
+
+recursive-include tests *.py
