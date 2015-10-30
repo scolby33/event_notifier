@@ -9,7 +9,7 @@ class ANotifierBackend(object, metaclass=abc.ABCMeta):
         
         :param notification: a Notification object to be dispatched
         :type notification: event_notifier.Notification.Notification
-        :returns: 0 on success, an error code otherwise
+        :raises EventNotifierNotificationDispatchException: When an error is encountered with dispatching the notification.
         """
         raise NotImplementedError
             
