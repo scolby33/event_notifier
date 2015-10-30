@@ -6,7 +6,4 @@ install:
 script:
     - tox
 env:
-    - TOXENV=coverage-clean
     - TOXENV=py35
-    - TOXENV=manifest
-    - TOXENV=coverage-report
