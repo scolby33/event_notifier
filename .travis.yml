@@ -1,0 +1,10 @@
+language: python
+install:
+    - pip install tox
+script:
+    - tox
+env:
+    - TOXENV=coverage-clean
+    - TOXENV=py35
+    - TOXENV=manifext
+    - TOXENV=coverage-report
