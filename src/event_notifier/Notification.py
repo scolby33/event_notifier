@@ -3,7 +3,7 @@ import datetime
 
 def is_datetime(instance, attribue, value):
     if not isinstance(value, datetime.datetime):
-         raise ValueError('timestamp must be a datetime.datetime object')
+         raise TypeError('timestamp must be a datetime.datetime object')
 
 @attr.s
 class Notification(object):
