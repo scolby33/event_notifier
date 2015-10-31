@@ -20,12 +20,16 @@ def test_PushoverNotifierBackend_accepts_init_arguments():
 
 class StartMockPushoverServer(MockPushoverServer):
     @responses.activate
-    def test_PushoverNotifierBackend_sends_valid_messages():
+    def test_PushoverNotifierBackend_sends_valid_simple_notification():
         testPushoverNotifierBackend = PushoverNotifierBackend(TEST_TOKEN, TEST_USER, TEST_DEVICE)
         testSimpleNotification = Notification(
             subject = TEST_SUBJECT,
             message = TEST_MESSAGE
-        )
+        )        
+        assert testPushoverNotifierBackend.dispatch_notification(testSimpleNotification)
+        
+    @responses.activate
+    def test_PushoverNotifierBackend_sends_valid_complex_notification():
         testComplexNotification = Notification(
             subject = TEST_SUBJECT,
             message = TEST_MESSAGE,
@@ -35,5 +39,4 @@ class StartMockPushoverServer(MockPushoverServer):
             timestamp = TEST_TIMESTAMP,
             sound = TEST_SOUND
         )
-        testPushoverNotifierBackend.dispatch_notification(testSimpleNotification)
-        testPushoverNotifierBackend.dispatch_notification(testComplexNotification)
+        assert testPushoverNotifierBackend.dispatch_notification(testComplexNotification)

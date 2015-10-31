@@ -12,6 +12,8 @@ class ANotifierBackend(object, metaclass=abc.ABCMeta):
         :param notification: a Notification object to be dispatched
         :type notification: event_notifier.Notification.Notification
         :raises EventNotifierNotificationDispatchException: When an error is encountered with dispatching the notification.
+        :returns: True if the notification was dispatched correctly
+        :rtype: bool
         """
         raise NotImplementedError
             
@@ -37,6 +39,8 @@ class PushoverNotifierBackend(ANotifierBackend):
         :param notification: a Notification object to be dispatched
         :type notification: event_notifier.Notification.Notification
         :raises EventNotifierNotificationDispatchException: When an error is encountered with dispatching the notification. Passes the response object from the HTTP POST request to the exception.
+        :returns: True if the notification was dispatched correctly
+        :rtype: bool
         """
         payload = {
             'token': self.token,
@@ -58,3 +62,4 @@ class PushoverNotifierBackend(ANotifierBackend):
         )
         if r.status_code != 200:
             raise EventNotifierNotificationDispatchException(r)
+        return True
