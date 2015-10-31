@@ -3,6 +3,7 @@
 - [x] Make Sphinx/autodoc work.
 - [x] TESTS!
 - [x] Sphinx/autodoc and doctest in tox.
+- [ ] Implement teardown of `mock_pushover_server` fixture (what should its scope be?)
 - [ ] Flesh out Event class.
 - [ ] Implement a storage backend (likely SQLite).
 - [ ] Implement Growl backend.
