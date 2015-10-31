@@ -3,14 +3,7 @@ import pytest
 import datetime
 
 from event_notifier.Notification import Notification
-
-TEST_SUBJECT = 'a'
-TEST_MESSAGE = 'b'
-TEST_URL = 'http://c.com'
-TEST_URL_TITLE = 'c'
-TEST_PRIORITY = 1
-TEST_TIMESTAMP = datetime.datetime(2015, 1, 1, 12, 31, 4, 14)
-TEST_SOUND = 'd'
+from tests.constants import *
 
 def test_Notification_requires_subject_and_message():
     with pytest.raises(TypeError):
