@@ -49,6 +49,10 @@ class PushoverNotifierBackend(ANotifierBackend):
             'sound': notification.sound
         }
         headers= {'Content-type': 'application/x-www-form-urlencoded'}
-        r = requests.post('https://api.pushover.net:443/1/messages.json', params=payload, headers=headers)
+        r = requests.post(
+            'https://api.pushover.net:443/1/messages.json',
+            data = payload,
+            headers = headers
+        )
         if r.status_code != 200:
             raise EventNotifierNotificationDispatchException(r)
