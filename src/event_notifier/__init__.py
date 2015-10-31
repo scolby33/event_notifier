@@ -14,7 +14,7 @@ __description__ = 'A Python3 package for unified processing and dispatching of v
 __url__ = 'https://github.com/scolby33/event_notifier'
 
 __author__ = 'Scott Colby'
-__email__ = ''
+__email__ = 'scolby33@gmail.com'
 
 __license__ = 'Other/Proprietary License'
 __copyright__ = 'Copyright (c) 2015 Scott Colby'
