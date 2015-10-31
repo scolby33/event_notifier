@@ -50,7 +50,7 @@ class PushoverNotifierBackend(ANotifierBackend):
             'timestamp': notification.timestamp.timestamp(),
             'sound': notification.sound
         }
-        headers= {'Content-type': 'application/x-www-form-urlencoded'}
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
         r = requests.post(
             'https://api.pushover.net:443/1/messages.json',
             data = payload,
