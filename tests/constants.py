@@ -12,6 +12,8 @@ TEST_PRIORITY = 1
 TEST_TIMESTAMP = datetime.datetime(2015, 1, 1, 12, 31, 4, 14)
 TEST_SOUND = 'towel'
 
+TEST_REQUEST_ID = '3b5b68d5e3271167baa7de57133349de'
+
 __all__ = [
    'TEST_TOKEN',
    'TEST_USER',
