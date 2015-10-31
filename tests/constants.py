@@ -24,5 +24,6 @@ __all__ = [
    'TEST_URL_TITLE',
    'TEST_PRIORITY',
    'TEST_TIMESTAMP',
-   'TEST_SOUND' 
+   'TEST_SOUND',
+   'TEST_REQUEST_ID'
 ]
