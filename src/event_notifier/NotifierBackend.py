@@ -1,6 +1,8 @@
 import abc
 import requests
 
+from event_notifier.exceptions import EventNotifierNotificationDispatchException
+
 class ANotifierBackend(object, metaclass=abc.ABCMeta):
     """Abstract class for notifier backends"""
     @abc.abstractmethod
