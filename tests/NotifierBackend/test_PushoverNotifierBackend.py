@@ -3,7 +3,7 @@ import responses
 
 from event_notifier.NotifierBackend import ANotifierBackend, PushoverNotifierBackend
 from event_notifier.Notification import Notification
-from mock_pushover_server import mock_pushover_server
+from tests.fixtures import mock_pushover_server
 from tests.constants import *
 
 def test_PushoverNotifierBackend_exists():

@@ -10,6 +10,7 @@ from tests.constants import *
 
 @pytest.fixture
 def mock_pushover_server():
+    """A fixture to mock requests to the Pushover API"""
     responses.add_callback(
         responses.POST,
         'https://api.pushover.net:443/1/messages.json',
@@ -77,12 +78,12 @@ def _verify_payload(payload):
             'type': str
         }
     }
-    for k, v in params_to_check.items():
-        if not payload[k] and not v['optional']:
-            return k
-        if not isinstance(payload[k], v['type']):
-            return k
+    for param, requirements in params_to_check.items():
+        if not payload[param] and not requirements['optional']:
+            return param
+        if not isinstance(payload[param], requirements['type']):
+            return param
         if v['valid_values']:
-            if not payload[k] in v['valid_values']:
-                return k
+            if not payload[param] in v['valid_values']:
+                return param
     return True
