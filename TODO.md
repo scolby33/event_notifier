@@ -11,3 +11,5 @@
 - [ ] Implement a storage backend (likely SQLite).
 - [ ] Implement Growl backend.
 - [ ] Build docs as part of setup.py? Not sure if this is something that is done.
+- [x] Move TODO list to GitHub issues
+- [ ] delete TODO List
