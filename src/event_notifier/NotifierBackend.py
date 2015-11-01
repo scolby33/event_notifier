@@ -56,7 +56,7 @@ class PushoverNotifierBackend(ANotifierBackend):
             'url': notification.url,
             'url_title': notification.url_title,
             'priority': notification.priority,
-            'timestamp': notification.timestamp.timestamp(),
+            'timestamp': int(notification.timestamp.timestamp()),
             'sound': notification.sound
         }
         headers = {'Content-type': 'application/x-www-form-urlencoded'}
