@@ -36,30 +36,31 @@ def mock_bad_pushover_server(request):
     
 def _request_callback(request):
     payload = urllib.parse.parse_qs(request.body)
-    headers = {'Content-Type': 'application/json; charset=utf-8', 'X-Request-Id': TEST_REQUEST_ID}
-    if _verify_payload(payload):
+    headers = {'Content-Type': 'application/json; charset=utf-8', 'X-Request-Id': TEST_REQUEST_ID}    
+    res = _verify_payload(payload)
+    if 0 == len(res):
         return (200, headers, json.dumps({'status': 1, 'request': TEST_REQUEST_ID}))
-    # TODO: deal with bad requests in a real way
-    return (400, headers, json.dumps('fail'))
+    else:
+        return (400, headers, json.dumps({"bad_parameters": res}))
     
 def _verify_payload(payload):
     """Verify that the passed-in payload meets Pushover's requirements
 
     :param payload: the payload to be verified
     :type payload: dict
-    :returns: True if the payload is valid, a str containing the name of the invalid parameter otherwise
-    :rtype: bool or str
+    :returns: a list of the parameters with erroneous values
+    :rtype: list
     """
     params_to_check = {
         'token': {
             'optional': False,
             'type': str,
-            'valid_values': [TEST_TOKEN]
+            'valid_values': {TEST_TOKEN}
         },
         'user': {
             'optional': False,
             'type': str,
-            'valid_values': [TEST_USER]
+            'valid_values': {TEST_USER}
         },
         'title': {
             'optional': True,
@@ -84,7 +85,7 @@ def _verify_payload(payload):
         'priority': {
             'optional': True,
             'type': int,
-            'valid_values': [-2, -1, 0, 1, 2]
+            'valid_values': {-2, -1, 0, 1, 2}
         },
         'timestamp': {
             'optional': True,
@@ -95,11 +96,15 @@ def _verify_payload(payload):
             'type': str
         }
     }
+    malformed_params = []
+    
     for param, requirements in params_to_check.items():
-        if param not in payload and not requirements['optional']:
-            return param
-        if not isinstance(payload[param], requirements['type']):
-            return param
-        if 'valid_values' in requirements and payload[param] not in requirements['valid_values']:
-            return param
-    return True
+        if not requirements['optional']:
+            if param not in payload:
+                malformed_params.add((param, "missing"))
+            elif not isinstance(payload[param], requirements['type']):
+                malformed_params.add((param, "wrong_type"))
+            elif "valid_values" in requirements and param not in requirements["valid_values"]:
+                malformed_params.add((param, "invalid_value"))
+                
+    return malformed_params
