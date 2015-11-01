@@ -101,10 +101,11 @@ def _verify_payload(payload):
     for param, requirements in params_to_check.items():
         if not requirements['optional']:
             if param not in payload:
-                malformed_params.add((param, "missing"))
-            elif not isinstance(payload[param], requirements['type']):
-                malformed_params.add((param, "wrong_type"))
-            elif "valid_values" in requirements and param not in requirements["valid_values"]:
-                malformed_params.add((param, "invalid_value"))
+                malformed_params.append((param, "missing"))
+            elif not isinstance(payload[param][-1], requirements['type']):
+                print('param: {}, requirements: {}'.format(type(payload[param]), requirements['type']))
+                malformed_params.append((param, "wrong_type"))
+            elif "valid_values" in requirements and payload[param][-1] not in requirements["valid_values"]:
+                malformed_params.append((param, "invalid_value"))
                 
     return malformed_params
