@@ -1,3 +1,4 @@
+import datetime
 import json
 import urllib
 
@@ -54,58 +55,50 @@ def _verify_payload(payload):
     params_to_check = {
         'token': {
             'optional': False,
-            'type': str,
             'valid_values': {TEST_TOKEN}
         },
         'user': {
             'optional': False,
-            'type': str,
             'valid_values': {TEST_USER}
         },
         'title': {
-            'optional': True,
-            'type': str
+            'optional': True
         },
         'message': {
-            'optional': False,
-            'type': str
+            'optional': False
         },
         'device': {
-            'optional': True,
-            'type': str
+            'optional': True
         },
         'url': {
-            'optional': True,
-            'type': str
+            'optional': True
         },
         'url_title': {
-            'optional': True,
-            'type': str
+            'optional': True
         },
         'priority': {
             'optional': True,
-            'type': int,
-            'valid_values': {-2, -1, 0, 1, 2}
+            'valid_values': {'-2', '-1', '0', '1', '2'}
         },
         'timestamp': {
-            'optional': True,
-            'type': int,
+            'optional': True
         },
         'sound': {
-            'optional': True,
-            'type': str
+            'optional': True
         }
     }
     malformed_params = []
     
     for param, requirements in params_to_check.items():
-        if not requirements['optional']:
-            if param not in payload:
-                malformed_params.append((param, "missing"))
-            elif not isinstance(payload[param][-1], requirements['type']):
-                print('param: {}, requirements: {}'.format(type(payload[param]), requirements['type']))
-                malformed_params.append((param, "wrong_type"))
-            elif "valid_values" in requirements and payload[param][-1] not in requirements["valid_values"]:
-                malformed_params.append((param, "invalid_value"))
+        if param not in payload:
+            if not requirements['optional']:
+                malformed_params.append((param, 'missing'))
+        elif 'valid_values' in requirements and payload[param][-1] not in requirements['valid_values']:
+            malformed_params.append((param, 'invalid_value'))
+        elif param == 'timestamp':
+            try:
+                datetime.datetime.fromtimestamp(int(payload[param][-1]))
+            except:
+                malformed_params.append((param, 'invalid_timestamp_value'))
                 
     return malformed_params
