@@ -1,4 +1,5 @@
 import abc
+import attr
 import requests
 
 from event_notifier.exceptions import EventNotifierNotificationDispatchException
@@ -16,22 +17,26 @@ class ANotifierBackend(object, metaclass=abc.ABCMeta):
         :rtype: bool
         """
         raise NotImplementedError
-            
+        
+@attr.s
 class PushoverNotifierBackend(ANotifierBackend):
     """A backend to send Pushover notifications"""
-    def __init__(self, token, user, device=None):
-        """Initializes the PushoverNotifier backend
-        
-        :param token: The Pushover API token ("APP_TOKEN").
-        :param user: The Pushover user/group key to whom the notification will be sent
-        :param device: Optional. The user's device name to send the message directly to that device, rather than all of the user's devices (multiple devices may be separated by a comma)
-        :type token: str
-        :type user: str
-        :type device: str
-        """
-        self.token = token
-        self.user = user
-        self.device = device
+    token = attr.ib()
+    user = attr.ib()
+    device = attr.ib(default=None)
+    # def __init__(self, token, user, device=None):
+    #     """Initializes the PushoverNotifier backend
+    #
+    #     :param token: The Pushover API token ("APP_TOKEN").
+    #     :param user: The Pushover user/group key to whom the notification will be sent
+    #     :param device: Optional. The user's device name to send the message directly to that device, rather than all of the user's devices (multiple devices may be separated by a comma)
+    #     :type token: str
+    #     :type user: str
+    #     :type device: str
+    #     """
+    #     self.token = token
+    #     self.user = user
+    #     self.device = device
         
     def dispatch_notification(self, notification):
         """Sends a passed-in notification
