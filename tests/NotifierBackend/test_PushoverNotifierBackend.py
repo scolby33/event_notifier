@@ -46,4 +46,3 @@ def test_PushoverNotifierBackend_raises_exception_when_server_down(mock_bad_push
     testPushoverNotifierBackend = PushoverNotifierBackend(TEST_TOKEN, TEST_USER, TEST_DEVICE)
     with pytest.raises(EventNotifierNotificationDispatchException):
         testPushoverNotifierBackend.dispatch_notification(mock_simple_notification)
-    assert False
