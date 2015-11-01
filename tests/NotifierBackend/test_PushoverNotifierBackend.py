@@ -10,7 +10,7 @@ from tests.constants import *
 
 def test_PushoverNotifierBackend_exists():
     assert isinstance(PushoverNotifierBackend(TEST_TOKEN, TEST_USER), PushoverNotifierBackend)
-    
+
 def test_PushoverNotifierBackend_is_an_ANotifierBackend():
     assert isinstance(PushoverNotifierBackend(TEST_TOKEN, TEST_USER), ANotifierBackend)
 
@@ -36,6 +36,7 @@ def test_PushoverNotifierBackend_raises_exception_when_a_bad_notification_is_pro
     with pytest.raises(AttributeError):
         testPushoverNotifierBackend.dispatch_notification(mock_bad_notification)
 
+@responses.activate
 def test_PushoverNotifierBackend_raises_exception_when_server_rejects_notification(mock_pushover_server, mock_simple_notification):
     testPushoverNotifierBackend = PushoverNotifierBackend(TEST_TOKEN + 'bad', TEST_USER, TEST_DEVICE)
     with pytest.raises(EventNotifierNotificationDispatchException):
