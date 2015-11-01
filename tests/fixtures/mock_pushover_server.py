@@ -17,6 +17,17 @@ def mock_pushover_server():
         callback = _request_callback
     )
     
+@pytest.fixture
+def mock_bad_pushover_server():
+    """A fixture that pretends the Pushover API isn't accepting even valid requests"""
+    responses.add(
+        responses.POST,
+        'https://api.pushover.net:443/1/messages.json',
+        body = json.dumps({'error': 'server failure'}),
+        status = 500,
+        content_type = 'application/json'
+    )
+    
 def _request_callback(request):
     payload = urllib.parse.parse_qs(request.body)
     headers = {'Content-Type': 'application/json; charset=utf-8', 'X-Request-Id': TEST_REQUEST_ID}
