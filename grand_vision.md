@@ -1,5 +1,5 @@
 #How to Use this Package
-Here's my idea on how a full use of this pacakge will look.
+Here's my idea on how a full use of this package will look.
 
 ##The `Event` Class
 An instance of the `Event` class encapsulates logic used to create `Notification`s. They must implement several methods and properties:
@@ -23,10 +23,10 @@ This use case involves several programs involved in the notification process.
 1. User program(s)
    These programs register `NotifierBackend`s with the `StorageBackend` using `AStorageBackend.register_notifier_backend()`. This returns a unique identifier for the `NotifierBackend`. The program can then create instances of `AEvent` and add them to the `StorageBackend` with `AStorageBackend.add_event()`. The `Event`s can specify a list of `NotifierBackend`s that their notifications should be dispatched with.
    
-###A Note About Subclasses
+###A Note About Subclasses and Security
 I envision two "security" modes for daemon/manager script. In the strict mode, only subclasses of `AEvent` that are implemented in the `event_notifier` package or by the manager script itself. This would be the preferred mode for any publicly accessible use of this package or one where the built-in features are sufficient.
 
-In the loose security mode, arbitrary subclasses of `AEvent` can be passed in. Likely stored by pickling, these `Event`s have the advantage of being fully extensible. The `process()` method can be modified to do whatever the implementer wants--track the stock market, forward Tweets, or execute arbitrary code on your server. This mode provides a huge amount of flexibility but should only be used in a secure and trusted environment.
+In the loose security mode, arbitrary subclasses of `AEvent` can be passed in. Likely stored by pickling, these `Event`s have the advantage of being fully extensible. The `process()` method can be modified to do whatever the implementer wants--track the stock market, forward Tweets, *or execute arbitrary code on your server*. _This mode provides a huge amount of flexibility but should only be used in a secure and trusted environment._
    
 ##The Single-User Model
 This use case involves a single program or script using this package to remove boilerplate for sending notifications.
