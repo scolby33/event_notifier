@@ -9,16 +9,19 @@ import requests
 from tests.constants import *
 
 @pytest.fixture
-def mock_pushover_server():
+def mock_pushover_server(request):
     """A fixture to mock requests to the Pushover API"""
     responses.add_callback(
         responses.POST,
         'https://api.pushover.net:443/1/messages.json',
         callback = _request_callback
     )
+    def fin():
+        responses.reset()
+    request.addfinalizer(fin)
     
 @pytest.fixture
-def mock_bad_pushover_server():
+def mock_bad_pushover_server(request):
     """A fixture that pretends the Pushover API isn't accepting even valid requests"""
     responses.add(
         responses.POST,
@@ -27,6 +30,9 @@ def mock_bad_pushover_server():
         status = 500,
         content_type = 'application/json'
     )
+    def fin():
+        responses.reset()
+    request.addfinalizer(fin)
     
 def _request_callback(request):
     payload = urllib.parse.parse_qs(request.body)
@@ -90,11 +96,10 @@ def _verify_payload(payload):
         }
     }
     for param, requirements in params_to_check.items():
-        if not payload[param] and not requirements['optional']:
+        if param not in payload and not requirements['optional']:
             return param
         if not isinstance(payload[param], requirements['type']):
             return param
-        if v['valid_values']:
-            if not payload[param] in v['valid_values']:
-                return param
+        if 'valid_values' in requirements and payload[param] not in requirements['valid_values']:
+            return param
     return True
