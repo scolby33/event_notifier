@@ -39,3 +39,5 @@ class AStorageBackend(object,  metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def _list_notifications(self): # pragma: no cover
         raise NotImplementedError
+
+Base = sqlalchemy.ext.declarative.declarative_base()
