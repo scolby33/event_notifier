@@ -1,8 +1,10 @@
 import abc
-import attr
 import requests
 
+import sqlalchemy
+
 from event_notifier.exceptions import EventNotifierNotificationDispatchException
+from event_notifier.StorageBackend import Base
 
 class ANotifierBackend(object, metaclass=abc.ABCMeta):
     """Abstract class for notifier backends"""
@@ -18,25 +20,19 @@ class ANotifierBackend(object, metaclass=abc.ABCMeta):
         """
         raise NotImplementedError
         
-@attr.s
-class PushoverNotifierBackend(ANotifierBackend):
-    """A backend to send Pushover notifications"""
-    token = attr.ib()
-    user = attr.ib()
-    device = attr.ib(default=None)
-    # def __init__(self, token, user, device=None):
-    #     """Initializes the PushoverNotifier backend
-    #
-    #     :param token: The Pushover API token ("APP_TOKEN").
-    #     :param user: The Pushover user/group key to whom the notification will be sent
-    #     :param device: Optional. The user's device name to send the message directly to that device, rather than all of the user's devices (multiple devices may be separated by a comma)
-    #     :type token: str
-    #     :type user: str
-    #     :type device: str
-    #     """
-    #     self.token = token
-    #     self.user = user
-    #     self.device = device
+class NotifierBackendMeta(type(ANotifierBackend), type(Base)):
+    pass
+    
+class PushoverNotifierBackend(ANotifierBackend, Base, metaclass=NotifierBackendMeta):
+    __tablename__ = 'pushover_notifier_parameters'
+    
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    token = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    user = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    device = sqlalchemy.Column(sqlalchemy.String)
+    
+    def __repr__(self):
+        return '<PushoverNotifierBackend(token={}, user={}, device={})>'.format(self.token, self.user, self.device)
         
     def dispatch_notification(self, notification):
         """Sends a passed-in notification
