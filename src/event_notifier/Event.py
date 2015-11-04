@@ -1,3 +1,5 @@
-class Event(object):
-    """docstring for Event"""
+import abc
+
+class AEvent(object, metaclass=abc.ABCMeta):
+    """Docstring for AEvent"""
     pass
