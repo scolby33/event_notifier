@@ -1,6 +1,7 @@
 import attr
 import datetime
 
+
 @attr.s
 class Notification(object):
     """An object representing a notification ready to be sent. Generally will be passed to a NotifierBackend for dispatching."""

@@ -9,6 +9,7 @@ import requests
 
 from tests.constants import *
 
+
 @pytest.fixture
 def mock_pushover_server(request):
     """A fixture to mock requests to the Pushover API"""
@@ -20,7 +21,8 @@ def mock_pushover_server(request):
     def fin():
         responses.reset()
     request.addfinalizer(fin)
-    
+
+
 @pytest.fixture
 def mock_bad_pushover_server(request):
     """A fixture that pretends the Pushover API isn't accepting even valid requests"""
@@ -34,16 +36,18 @@ def mock_bad_pushover_server(request):
     def fin():
         responses.reset()
     request.addfinalizer(fin)
-    
+
+
 def _request_callback(request):
     payload = urllib.parse.parse_qs(request.body)
-    headers = {'Content-Type': 'application/json; charset=utf-8', 'X-Request-Id': TEST_REQUEST_ID}    
+    headers = {'Content-Type': 'application/json; charset=utf-8', 'X-Request-Id': TEST_REQUEST_ID}
     res = _verify_payload(payload)
     if 0 == len(res):
         return (200, headers, json.dumps({'status': 1, 'request': TEST_REQUEST_ID}))
     else:
         return (400, headers, json.dumps({"bad_parameters": res}))
-    
+
+
 def _verify_payload(payload):
     """Verify that the passed-in payload meets Pushover's requirements
 
@@ -88,7 +92,7 @@ def _verify_payload(payload):
         }
     }
     malformed_params = []
-    
+
     for param, requirements in params_to_check.items():
         if param not in payload:
             if not requirements['optional']:
@@ -100,5 +104,5 @@ def _verify_payload(payload):
                 datetime.datetime.fromtimestamp(int(payload[param][-1]))
             except:
                 malformed_params.append((param, 'invalid_timestamp_value'))
-                
+
     return malformed_params
